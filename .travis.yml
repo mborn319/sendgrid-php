@@ -30,3 +30,14 @@ notifications:
       <a href="https://github.com/%{repository}/commits/%{commit}">View on GitHub</a>'
     format: html
     notify: true
+
+before_deploy:
+  - zip -r sendgrid-php.zip .
+
+deploy:
+  provider: releases
+  api_key: "${GITHUB_OAUTH_TOKEN}"
+  file: "sendgrid-php.zip"
+  skip_cleanup: true
+  on:
+    tags: true
